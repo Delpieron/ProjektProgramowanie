@@ -10,8 +10,6 @@ namespace ProjektProgramowanie
     {
 
         readonly CarListDbContext context;
-        //Car selectedCar = new Car();
-        // AddCarWindow carWindow = new AddCarWindow(context);
 
         public MainWindow(CarListDbContext context)
         {
@@ -24,7 +22,7 @@ namespace ProjektProgramowanie
 
         public void GetCars()
         {
-            CarDG.ItemsSource = context.CarList.ToList();
+            CarDG.ItemsSource = context.Car.ToList();
         }
 
         private void UpdateCar(object s, RoutedEventArgs e)
@@ -48,7 +46,7 @@ namespace ProjektProgramowanie
         private void DeleteCar(object s, RoutedEventArgs e)
         {
             var productToDelete = (s as FrameworkElement).DataContext as Car;
-            context.CarList.Remove(productToDelete);
+            context.Car.Remove(productToDelete);
             context.SaveChanges();
             GetCars();
         }

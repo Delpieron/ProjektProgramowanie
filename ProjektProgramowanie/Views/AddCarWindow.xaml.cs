@@ -25,7 +25,7 @@ namespace ProjektProgramowanie
             }
             try
             {
-                context.CarList.Add(newCar);
+                context.Car.Add(newCar);
                 context.SaveChanges();
             }
             catch (Exception ex)
