@@ -20,13 +20,13 @@ namespace ProjektProgramowanie
                 options.UseSqlite("Data Source = CarList.db");
             });
 
-            services.AddSingleton<MainWindow>();
+            services.AddSingleton<LoginWindow>();
             serviceProvider = services.BuildServiceProvider();
         }
 
         private void OnStartup(object s, StartupEventArgs e)
         {
-            var mainWindow = serviceProvider.GetService<MainWindow>();
+            var mainWindow = serviceProvider.GetService<LoginWindow>();
             mainWindow.Show();
         }
     }

@@ -9,26 +9,36 @@ namespace ProjektProgramowanie
     public partial class MainWindow : Window
     {
 
-        readonly CarListDbContext context;
+        private readonly CarListDbContext dbContext;
+        private readonly User _currentUser;
 
-        public MainWindow(CarListDbContext context)
+        public MainWindow(CarListDbContext context, User user)
         {
-            this.context = context;
+            dbContext = context;
+            _currentUser = user;
             InitializeComponent();
+            CheckAndManagePermissions();
             GetCars();
             UpdateCarGrid.IsEnabled = false;
         }
 
+        private void CheckAndManagePermissions()
+        {
+            if (_currentUser.PermissionsId == 1) return;
 
+            updateButton.Visibility = Visibility.Collapsed;
+            CarDG.Columns.RemoveAt(CarDG.Columns.Count-1);
+            CarDG.Columns.RemoveAt(CarDG.Columns.Count-1);
+        }
         public void GetCars()
         {
-            CarDG.ItemsSource = context.Car.ToList();
+            CarDG.ItemsSource = dbContext.Car.ToList();
         }
 
         private void UpdateCar(object s, RoutedEventArgs e)
         {
-            context.Update((s as FrameworkElement).DataContext as Car);
-            context.SaveChanges();
+            dbContext.Update((s as FrameworkElement).DataContext as Car);
+            dbContext.SaveChanges();
             GetCars();
             ClearUpdateCarGrid();
         }
@@ -46,14 +56,14 @@ namespace ProjektProgramowanie
         private void DeleteCar(object s, RoutedEventArgs e)
         {
             var productToDelete = (s as FrameworkElement).DataContext as Car;
-            context.Car.Remove(productToDelete);
-            context.SaveChanges();
+            dbContext.Car.Remove(productToDelete);
+            dbContext.SaveChanges();
             GetCars();
         }
 
         private void AddCarWindow(object sender, RoutedEventArgs e)
         {
-            AddCarWindow addCarWindow = new AddCarWindow(context);
+            AddCarWindow addCarWindow = new AddCarWindow(dbContext, _currentUser);
             addCarWindow.Show();
             Close();
         }

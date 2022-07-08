@@ -28,7 +28,7 @@ namespace ProjektProgramowanie
                 new Permission { Id = 2, Name = PermissionEnum.User });
 
             modelBuilder.Entity<User>().HasData(
-                new User { Id = 1, BirthDate = new System.DateTime(2000, 5, 4), Email = "kw@poczta.pl", Name = "Krzysztof", NIP = 123456879, PermissionsId = 1, Surename = "Wróblewski" });
+                new User { Id = 1, BirthDate = new System.DateTime(2000, 5, 4), Email = "kw@poczta.pl", Name = "Krzysztof", NIP = 123456879, PermissionsId = 1, Surename = "Wróblewski", Password = "haslo123" });
             base.OnModelCreating(modelBuilder);
         }
     }

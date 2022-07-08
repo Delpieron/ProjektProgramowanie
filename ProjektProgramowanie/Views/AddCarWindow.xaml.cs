@@ -7,11 +7,13 @@ namespace ProjektProgramowanie
     /// </summary>
     public partial class AddCarWindow : Window
     {
-        private readonly CarListDbContext context;
+        private readonly CarListDbContext _dbContext;
+        private readonly User _currentUser;
 
-        public AddCarWindow(CarListDbContext context)
+        public AddCarWindow(CarListDbContext context, User user)
         {
-            this.context = context;
+            _currentUser = user;
+            _dbContext = context;
             InitializeComponent();
         }
         private void AddCar(object sender, RoutedEventArgs e)
@@ -25,8 +27,8 @@ namespace ProjektProgramowanie
             }
             try
             {
-                context.Car.Add(newCar);
-                context.SaveChanges();
+                _dbContext.Car.Add(newCar);
+                _dbContext.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -42,7 +44,7 @@ namespace ProjektProgramowanie
         {
             string message = "Car added succesfuly";
             MessageBox.Show(message, "Error", MessageBoxButton.OK);
-            MainWindow main = new MainWindow(context);
+            MainWindow main = new MainWindow(_dbContext, _currentUser);
             main.Show();
             Close();
         }

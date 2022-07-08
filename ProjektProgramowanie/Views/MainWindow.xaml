@@ -17,7 +17,6 @@
         <DataGrid x:Name="CarDG" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True"
                   Grid.Row="1" ColumnWidth="*" Margin="5" IsSynchronizedWithCurrentItem="True" >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="CarId" Binding="{Binding CarId}"/>
                 <DataGridTextColumn Header="RegistrationNumber" Binding="{Binding RegistrationNumber}"/>
                 <DataGridTextColumn Header="Vin" Binding="{Binding Vin}"/>
                 <DataGridTextColumn Header="Model" Binding="{Binding Model}"/>
@@ -33,7 +32,7 @@
                 <DataGridTemplateColumn Header="Delete Car">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="DeleteCar" Click="DeleteCar"/>
+                            <Button Content="DeleteCar" Click="DeleteCar" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -83,7 +82,7 @@
                         <TextBox Grid.Row="3" Text="{Binding Brand}" Grid.ColumnSpan="2" Margin="184,0,0,30" Grid.RowSpan="2"/>
                         <Button Grid.Row="4" Grid.ColumnSpan="2" Width="150" Click="UpdateCar"
                                 Content="Edit" Margin="5"
-                            HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                            HorizontalAlignment="Center" VerticalAlignment="Bottom" x:Name="updateButton"/>
                     </Grid>
                 </StackPanel>
             </Border>

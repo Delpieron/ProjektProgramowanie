@@ -1,6 +1,4 @@
-﻿using ProjektProgramowanie.Model;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProjektProgramowanie
@@ -14,6 +12,8 @@ namespace ProjektProgramowanie
         public int NIP { get; set; }
         public DateTime BirthDate { get; set; }
         public string Name { get; set; }
+        public string Password { get; set; }
+
         public string Surename { get; set; }
         public string Email { get; set; }
 
