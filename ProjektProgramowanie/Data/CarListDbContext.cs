@@ -14,14 +14,14 @@ namespace ProjektProgramowanie
         public DbSet<Car> Car { get; set; }
         public DbSet<Permission> Permission { get; set; }
         public DbSet<User> User { get; set; }
-        public DbSet<CarPart> CarPart { get; set; }
+        public DbSet<Registration> Registration { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Car>().HasKey(x => x.Id);
             modelBuilder.Entity<Permission>().HasKey(x => x.Id);
             modelBuilder.Entity<User>().HasKey(x => x.Id);
-            modelBuilder.Entity<CarPart>().HasKey(x => x.Id);
+            modelBuilder.Entity<Registration>().HasKey(x => x.Vin);
             modelBuilder.Entity<Permission>().HasData(
                 new Permission { Id = 1, Name = PermissionEnum.Admin });
             modelBuilder.Entity<Permission>().HasData(

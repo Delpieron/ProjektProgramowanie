@@ -8,12 +8,11 @@ namespace ProjektProgramowanie
     public class Car
     {
         public int Id { get; set; }
-        public string RegistrationNumber { get; set; }
+        public decimal Price { get; set; }
+
+        [ForeignKey("VinFK")]
         public string Vin { get; set; }
         public string Model { get; set; }
         public string Brand { get; set; }
-
-        [ForeignKey("PartsFK")]
-        public int PartsId { get; set; }
     }
 }

@@ -19,26 +19,37 @@
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Label Grid.Row="0" Grid.Column="0" Content="RegistrationNumber"/>
-                    <TextBox Grid.Row="0" Grid.Column="1" Name="registrationNumber" Text="{Binding RegistrationNumber}"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Name="registrationNumber"/>
 
                     <Label Grid.Row="1" Grid.Column="0" Content="Vin"/>
-                    <TextBox Grid.Row="1" Grid.Column="2" Name="vin" Text="{Binding Vin}"/>
+                    <TextBox Grid.Row="1" Grid.Column="2" Name="vin"/>
 
                     <Label Grid.Row="2" Grid.Column="0" Content="Model"/>
-                    <TextBox x:Name="model" Grid.Row="2" Grid.Column="3" Text="{Binding Model}"/>
+                    <TextBox x:Name="model" Grid.Row="2" Grid.Column="3"/>
 
                     <Label Grid.Row="3" Grid.Column="0" Content="Brand"/>
-                    <TextBox x:Name="brand" Grid.Row="3" Grid.Column="4"  Text="{Binding Brand}"/>
-
-                    <Button Grid.Row="4" Width="150" Height="25"  Content="Add"  Click="AddCar"
+                    <TextBox x:Name="brand" Grid.Row="3" Grid.Column="4" />
+                    <Label Grid.Row="4" Grid.Column="0" Content="Price"/>
+                    <TextBox x:Name="Price" Grid.Row="4" Grid.Column="4" />
+                    <Label Grid.Row="5" Content="RegistrationData(Optional)" FontWeight="Bold"
+                       HorizontalAlignment="Left" 
+                       VerticalAlignment="Center" Margin="348,0,0,0" Grid.ColumnSpan="2"/>
+                    <Label Grid.Row="6" Grid.Column="0" Content="OwnerName"/>
+                    <TextBox x:Name="OwnerName" Grid.Row="6" Grid.Column="5"/>
+                    <Label Grid.Row="7" Grid.Column="0" Content="RegistrationDate"/>
+                    <TextBox x:Name="RegistrationDate" Grid.Row="7" Grid.Column="6" RenderTransformOrigin="0.497,0.324"/>
+                    <Button Grid.Row="8" Width="150" Height="25"  Content="Add"  Click="AddCar"
                             HorizontalAlignment="Left" VerticalAlignment="Top" Margin="99,45,0,0"/>
-                    <Button Width="150" Content="cancel" Height="25" Click="BackToMainWindow" Grid.Column="1" Margin="119,42,120,-6" Grid.Row="4"
+                    <Button Width="150" Content="cancel" Height="25" Click="BackToMainWindow" Grid.Column="1" Margin="119,42,120,-6" Grid.Row="8"
                             />
                 </Grid>
 

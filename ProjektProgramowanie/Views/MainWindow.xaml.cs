@@ -1,5 +1,10 @@
-﻿using System.Linq;
+﻿using ProjektProgramowanie.Model;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace ProjektProgramowanie
 {
@@ -11,66 +16,79 @@ namespace ProjektProgramowanie
 
         private readonly CarListDbContext dbContext;
         private readonly User _currentUser;
+        
 
         public MainWindow(CarListDbContext context, User user)
-        {
+        { 
             dbContext = context;
             _currentUser = user;
             InitializeComponent();
             CheckAndManagePermissions();
             GetCars();
-            UpdateCarGrid.IsEnabled = false;
         }
 
         private void CheckAndManagePermissions()
         {
             if (_currentUser.PermissionsId == 1) return;
 
-            updateButton.Visibility = Visibility.Collapsed;
-            CarDG.Columns.RemoveAt(CarDG.Columns.Count-1);
-            CarDG.Columns.RemoveAt(CarDG.Columns.Count-1);
+            CarDG.Columns.RemoveAt(CarDG.Columns.Count - 1);
+            CarDG.Columns.RemoveAt(CarDG.Columns.Count - 1);
         }
         public void GetCars()
-        {
-            CarDG.ItemsSource = dbContext.Car.ToList();
-        }
-
-        private void UpdateCar(object s, RoutedEventArgs e)
-        {
-            dbContext.Update((s as FrameworkElement).DataContext as Car);
-            dbContext.SaveChanges();
-            GetCars();
-            ClearUpdateCarGrid();
-        }
-        private void ClearUpdateCarGrid()
-        {
-            UpdateCarGrid.DataContext = null;
-            UpdateCarGrid.IsEnabled = false;
+        { 
+            var cars = dbContext.Car.ToList();
+            List<CarVo> carVos = new List<CarVo>();
+            foreach (Car car in cars)
+            {
+                var reg = dbContext.Registration.Where((item) => item.Vin == car.Vin).ToList();
+                carVos.Add(new CarVo { 
+                Id = car.Id,
+                Vin = car.Vin,
+                Brand = car.Brand,
+                Model = car.Model,
+                OwnerName = reg.Count > 1 ? reg.First().OwnerName : "",
+                Price = car.Price,
+                RegistrationDate = reg.Count > 1 ? reg.First().RegistrationDate : DateTime.Now,
+                RegistrationNumber = reg.Count > 1 ? reg.First().RegistrationNumber: ""
+                });
+            }
+            CarDG.ItemsSource = carVos;
         }
         private void SelectCarToEdit(object s, RoutedEventArgs e)
         {
-            UpdateCarGrid.DataContext = (s as FrameworkElement).DataContext as Car;
-            UpdateCarGrid.IsEnabled = true;
+            var carToEdit = (s as FrameworkElement).DataContext as CarVo;
+            ShowCarWindow(carToEdit);
         }
 
         private void DeleteCar(object s, RoutedEventArgs e)
         {
-            var productToDelete = (s as FrameworkElement).DataContext as Car;
-            dbContext.Car.Remove(productToDelete);
+            CarVo objectToDelete = (s as FrameworkElement).DataContext as CarVo;
+            dbContext.Car.Remove(new Car {Vin = objectToDelete.Vin, Brand = objectToDelete.Brand,Model = objectToDelete.Model,Price = objectToDelete.Price,Id = objectToDelete.Id });
+            dbContext.Remove(dbContext.Registration.Where((item)=> item.Vin == objectToDelete.Vin));
             dbContext.SaveChanges();
             GetCars();
         }
 
         private void AddCarWindow(object sender, RoutedEventArgs e)
         {
-            AddCarWindow addCarWindow = new AddCarWindow(dbContext, _currentUser);
-            addCarWindow.Show();
-            Close();
+            ShowCarWindow();
         }
 
         private void RefreshGridButton(object sender, RoutedEventArgs e)
         {
             GetCars();
+        }
+        /// <summary>
+        /// IF carToEdit is null then method will add new Car,
+        /// if parametr is not null method will try to update if exists,
+        /// if not car will be added
+        /// </summary>
+        /// <param name="carToEdit"></param>
+        private void ShowCarWindow(CarVo carToEdit = null)
+        {
+            AddCarWindow addCarWindow = new AddCarWindow(dbContext, _currentUser, carToEdit);
+            addCarWindow.Show();
+            Close();
         }
     }
 }
